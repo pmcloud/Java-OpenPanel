@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+
+	<definition name="basic.definition" template="/WEB-INF/jsp/layout-basic.jsp">
+		<put-attribute name="pageTitle" value="Aruba Cloud White Label" />
+		<put-attribute name="header" value="/WEB-INF/jsp/header.jsp" />
+		<put-attribute name="top" value="/WEB-INF/jsp/top.jsp" />
+		<put-attribute name="menu" value="/WEB-INF/jsp/menu.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/WEB-INF/jsp/footer.jsp" />
+	</definition>
+
+
+	<definition name="handlingException" extends="basic.definition">
+		<put-attribute name="body" value="/WEB-INF/jsp/handlingException.jsp" />
+	</definition>
+
+	<definition name="403" extends="basic.definition">
+		<put-attribute name="body" value="/WEB-INF/jsp/403.jsp" />
+	</definition>
+
+	<definition name="404" extends="basic.definition">
+		<put-attribute name="body" value="/WEB-INF/jsp/404.jsp" />
+	</definition>
+
+
+	<definition name="index" extends="basic.definition">
+		<put-attribute name="body" value="/WEB-INF/jsp/index.jsp" />
+	</definition>
+
+	<definition name="login" extends="basic.definition">
+		<put-attribute name="body" value="/WEB-INF/jsp/login.jsp" />
+	</definition>
+
+	<definition name="dashboards/index" extends="basic.definition">
+		<put-attribute name="body" value="/WEB-INF/jsp/dashboards/index.jsp" />
+	</definition>
+
+	<definition name="publicIps/index" extends="basic.definition">
+		<put-attribute name="body" value="/WEB-INF/jsp/publicIps/index.jsp" />
+	</definition>
+
+	<definition name="virtualSwitches/index" extends="basic.definition">
+		<put-attribute name="body" value="/WEB-INF/jsp/virtualSwitches/index.jsp" />
+	</definition>
+
+	<definition name="logAndJobs/index" extends="basic.definition">
+		<put-attribute name="body" value="/WEB-INF/jsp/logAndJobs/index.jsp" />
+	</definition>
+
+	<definition name="cloudServers/index" extends="basic.definition">
+		<put-attribute name="body" value="/WEB-INF/jsp/cloudServers/index.jsp" />
+	</definition>
+	<definition name="cloudServers/view" extends="basic.definition">
+		<put-attribute name="body" value="/WEB-INF/jsp/cloudServers/view.jsp" />
+	</definition>
+	<definition name="newCloudServer/view" extends="basic.definition">
+		<put-attribute name="body" value="/WEB-INF/jsp/newCloudServer/view.jsp" />
+	</definition>
+	<definition name="newCloudServer/inprogress" extends="basic.definition">
+		<put-attribute name="body" value="/WEB-INF/jsp/newCloudServer/inprogress.jsp" />
+	</definition>
+
+<!--@TILES@-->
+
+</tiles-definitions>

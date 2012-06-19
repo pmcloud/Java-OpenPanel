@@ -1,0 +1,1919 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions name="WsEndUser"
+	targetNamespace="https://api.computing.cloud.it/WsEndUser/v1.4"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex"
+	xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="https://api.computing.cloud.it/WsEndUser/v1.4"
+	xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+	xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+	xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy"
+	xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract"
+	xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+	xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:i0="https://api.computing.cloud.it/WsEndUser/v1.4/jsonp"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/">
+	<wsp:Policy wsu:Id="HttpsEndpoint_policy">
+		<wsp:ExactlyOne>
+			<wsp:All>
+				<sp:TransportBinding
+					xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+					<wsp:Policy>
+						<sp:TransportToken>
+							<wsp:Policy>
+								<sp:HttpsToken RequireClientCertificate="false" />
+							</wsp:Policy>
+						</sp:TransportToken>
+						<sp:AlgorithmSuite>
+							<wsp:Policy>
+								<sp:Basic256 />
+							</wsp:Policy>
+						</sp:AlgorithmSuite>
+						<sp:Layout>
+							<wsp:Policy>
+								<sp:Strict />
+							</wsp:Policy>
+						</sp:Layout>
+						<sp:IncludeTimestamp />
+					</wsp:Policy>
+				</sp:TransportBinding>
+				<sp:SignedSupportingTokens
+					xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+					<wsp:Policy>
+						<sp:UsernameToken
+							sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+							<wsp:Policy>
+								<sp:WssUsernameToken10 />
+							</wsp:Policy>
+						</sp:UsernameToken>
+					</wsp:Policy>
+				</sp:SignedSupportingTokens>
+				<sp:Wss11 xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+					<wsp:Policy />
+				</sp:Wss11>
+				<sp:Trust10 xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+					<wsp:Policy>
+						<sp:MustSupportIssuedTokens />
+						<sp:RequireClientEntropy />
+						<sp:RequireServerEntropy />
+					</wsp:Policy>
+				</sp:Trust10>
+				<wsaw:UsingAddressing />
+			</wsp:All>
+		</wsp:ExactlyOne>
+	</wsp:Policy>
+	<wsp:Policy wsu:Id="BasicHttpsEndpoint_policy">
+		<wsp:ExactlyOne>
+			<wsp:All>
+				<sp:TransportBinding
+					xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+					<wsp:Policy>
+						<sp:TransportToken>
+							<wsp:Policy>
+								<sp:HttpsToken RequireClientCertificate="false" />
+							</wsp:Policy>
+						</sp:TransportToken>
+						<sp:AlgorithmSuite>
+							<wsp:Policy>
+								<sp:Basic256 />
+							</wsp:Policy>
+						</sp:AlgorithmSuite>
+						<sp:Layout>
+							<wsp:Policy>
+								<sp:Lax />
+							</wsp:Policy>
+						</sp:Layout>
+						<sp:IncludeTimestamp />
+					</wsp:Policy>
+				</sp:TransportBinding>
+				<sp:SignedSupportingTokens
+					xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+					<wsp:Policy>
+						<sp:UsernameToken
+							sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+							<wsp:Policy>
+								<sp:WssUsernameToken10 />
+							</wsp:Policy>
+						</sp:UsernameToken>
+					</wsp:Policy>
+				</sp:SignedSupportingTokens>
+				<sp:Wss10 xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+					<wsp:Policy />
+				</sp:Wss10>
+			</wsp:All>
+		</wsp:ExactlyOne>
+	</wsp:Policy>
+	<wsdl:import namespace="https://api.computing.cloud.it/WsEndUser/v1.4/jsonp"
+		location="https://api.dc1.computing.cloud.it/WsEndUser/v1.4/WsEndUser.svc?wsdl=wsdl0" />
+	<wsdl:types>
+		<xsd:schema targetNamespace="https://api.computing.cloud.it/WsEndUser/v1.4/Imports">
+			<xsd:import
+				schemaLocation="https://api.dc1.computing.cloud.it/WsEndUser/v1.4/WsEndUser.svc?xsd=xsd0"
+				namespace="https://api.computing.cloud.it/WsEndUser/v1.4" />
+			<xsd:import
+				schemaLocation="https://api.dc1.computing.cloud.it/WsEndUser/v1.4/WsEndUser.svc?xsd=xsd1"
+				namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+			<xsd:import
+				schemaLocation="https://api.dc1.computing.cloud.it/WsEndUser/v1.4/WsEndUser.svc?xsd=xsd2"
+				namespace="http://schemas.datacontract.org/2004/07/Aruba.Cloud.Common" />
+			<xsd:import
+				schemaLocation="https://api.dc1.computing.cloud.it/WsEndUser/v1.4/WsEndUser.svc?xsd=xsd3"
+				namespace="http://schemas.datacontract.org/2004/07/" />
+			<xsd:import
+				schemaLocation="https://api.dc1.computing.cloud.it/WsEndUser/v1.4/WsEndUser.svc?xsd=xsd4"
+				namespace="http://schemas.datacontract.org/2004/07/Aruba.Cloud.Provisioning.Entities" />
+			<xsd:import
+				schemaLocation="https://api.dc1.computing.cloud.it/WsEndUser/v1.4/WsEndUser.svc?xsd=xsd5"
+				namespace="http://schemas.datacontract.org/2004/07/Aruba.Cloud.WsEndUser.Business.Entities" />
+			<xsd:import
+				schemaLocation="https://api.dc1.computing.cloud.it/WsEndUser/v1.4/WsEndUser.svc?xsd=xsd6"
+				namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="IWsEndUser_SetEnqueueAssociateVLan_InputMessage">
+		<wsdl:part name="parameters" element="tns:SetEnqueueAssociateVLan" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetEnqueueAssociateVLan_OutputMessage">
+		<wsdl:part name="parameters" element="tns:SetEnqueueAssociateVLanResponse" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetEnqueueDeassociateVLan_InputMessage">
+		<wsdl:part name="parameters" element="tns:SetEnqueueDeassociateVLan" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetEnqueueDeassociateVLan_OutputMessage">
+		<wsdl:part name="parameters" element="tns:SetEnqueueDeassociateVLanResponse" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetEnqueueCreateFTPAccount_InputMessage">
+		<wsdl:part name="parameters" element="tns:SetEnqueueCreateFTPAccount" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetEnqueueCreateFTPAccount_OutputMessage">
+		<wsdl:part name="parameters" element="tns:SetEnqueueCreateFTPAccountResponse" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetEnqueueResizeFTPAccount_InputMessage">
+		<wsdl:part name="parameters" element="tns:SetEnqueueResizeFTPAccount" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetEnqueueResizeFTPAccount_OutputMessage">
+		<wsdl:part name="parameters" element="tns:SetEnqueueResizeFTPAccountResponse" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_GetVDCGraph_InputMessage">
+		<wsdl:part name="parameters" element="tns:GetVDCGraph" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_GetVDCGraph_OutputMessage">
+		<wsdl:part name="parameters" element="tns:GetVDCGraphResponse" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetAddVDCGraph_InputMessage">
+		<wsdl:part name="parameters" element="tns:SetAddVDCGraph" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetAddVDCGraph_OutputMessage">
+		<wsdl:part name="parameters" element="tns:SetAddVDCGraphResponse" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetUpdateVDCGraph_InputMessage">
+		<wsdl:part name="parameters" element="tns:SetUpdateVDCGraph" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetUpdateVDCGraph_OutputMessage">
+		<wsdl:part name="parameters" element="tns:SetUpdateVDCGraphResponse" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_GetUserAuthenticationToken_InputMessage">
+		<wsdl:part name="parameters" element="tns:GetUserAuthenticationToken" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_GetUserAuthenticationToken_OutputMessage">
+		<wsdl:part name="parameters" element="tns:GetUserAuthenticationTokenResponse" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_GetCompanyByUrl_InputMessage">
+		<wsdl:part name="parameters" element="tns:GetCompanyByUrl" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_GetCompanyByUrl_OutputMessage">
+		<wsdl:part name="parameters" element="tns:GetCompanyByUrlResponse" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_GetHypervisors_InputMessage">
+		<wsdl:part name="parameters" element="tns:GetHypervisors" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_GetHypervisors_OutputMessage">
+		<wsdl:part name="parameters" element="tns:GetHypervisorsResponse" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_GetVirtualDatacenter_InputMessage">
+		<wsdl:part name="parameters" element="tns:GetVirtualDatacenter" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_GetVirtualDatacenter_OutputMessage">
+		<wsdl:part name="parameters" element="tns:GetVirtualDatacenterResponse" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_GetVirtualDatacenterCost_InputMessage">
+		<wsdl:part name="parameters" element="tns:GetVirtualDatacenterCost" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_GetVirtualDatacenterCost_OutputMessage">
+		<wsdl:part name="parameters" element="tns:GetVirtualDatacenterCostResponse" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_GetServers_InputMessage">
+		<wsdl:part name="parameters" element="tns:GetServers" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_GetServers_OutputMessage">
+		<wsdl:part name="parameters" element="tns:GetServersResponse" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_GetServerDetails_InputMessage">
+		<wsdl:part name="parameters" element="tns:GetServerDetails" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_GetServerDetails_OutputMessage">
+		<wsdl:part name="parameters" element="tns:GetServerDetailsResponse" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_GetCredit_InputMessage">
+		<wsdl:part name="parameters" element="tns:GetCredit" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_GetCredit_OutputMessage">
+		<wsdl:part name="parameters" element="tns:GetCreditResponse" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_GetPriceList_InputMessage">
+		<wsdl:part name="parameters" element="tns:GetPriceList" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_GetPriceList_OutputMessage">
+		<wsdl:part name="parameters" element="tns:GetPriceListResponse" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_GetPurchasedVLans_InputMessage">
+		<wsdl:part name="parameters" element="tns:GetPurchasedVLans" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_GetPurchasedVLans_OutputMessage">
+		<wsdl:part name="parameters" element="tns:GetPurchasedVLansResponse" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_GetPurchasedIpAddresses_InputMessage">
+		<wsdl:part name="parameters" element="tns:GetPurchasedIpAddresses" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_GetPurchasedIpAddresses_OutputMessage">
+		<wsdl:part name="parameters" element="tns:GetPurchasedIpAddressesResponse" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_GetJobs_InputMessage">
+		<wsdl:part name="parameters" element="tns:GetJobs" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_GetJobs_OutputMessage">
+		<wsdl:part name="parameters" element="tns:GetJobsResponse" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_GetLogs_InputMessage">
+		<wsdl:part name="parameters" element="tns:GetLogs" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_GetLogs_OutputMessage">
+		<wsdl:part name="parameters" element="tns:GetLogsResponse" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_GetDatacenterConfigurations_InputMessage">
+		<wsdl:part name="parameters" element="tns:GetDatacenterConfigurations" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_GetDatacenterConfigurations_OutputMessage">
+		<wsdl:part name="parameters" element="tns:GetDatacenterConfigurationsResponse" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_GetCustomVirtualDisks_InputMessage">
+		<wsdl:part name="parameters" element="tns:GetCustomVirtualDisks" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_GetCustomVirtualDisks_OutputMessage">
+		<wsdl:part name="parameters" element="tns:GetCustomVirtualDisksResponse" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_GetIsos_InputMessage">
+		<wsdl:part name="parameters" element="tns:GetIsos" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_GetIsos_OutputMessage">
+		<wsdl:part name="parameters" element="tns:GetIsosResponse" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_GetUserInfo_InputMessage">
+		<wsdl:part name="parameters" element="tns:GetUserInfo" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_GetUserInfo_OutputMessage">
+		<wsdl:part name="parameters" element="tns:GetUserInfoResponse" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_GetPurchasedFTP_InputMessage">
+		<wsdl:part name="parameters" element="tns:GetPurchasedFTP" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_GetPurchasedFTP_OutputMessage">
+		<wsdl:part name="parameters" element="tns:GetPurchasedFTPResponse" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetEnqueueServerCreation_InputMessage">
+		<wsdl:part name="parameters" element="tns:SetEnqueueServerCreation" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetEnqueueServerCreation_OutputMessage">
+		<wsdl:part name="parameters" element="tns:SetEnqueueServerCreationResponse" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetEnqueueServerUpdate_InputMessage">
+		<wsdl:part name="parameters" element="tns:SetEnqueueServerUpdate" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetEnqueueServerUpdate_OutputMessage">
+		<wsdl:part name="parameters" element="tns:SetEnqueueServerUpdateResponse" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetEnqueueServerStart_InputMessage">
+		<wsdl:part name="parameters" element="tns:SetEnqueueServerStart" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetEnqueueServerStart_OutputMessage">
+		<wsdl:part name="parameters" element="tns:SetEnqueueServerStartResponse" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetEnqueueServerStop_InputMessage">
+		<wsdl:part name="parameters" element="tns:SetEnqueueServerStop" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetEnqueueServerStop_OutputMessage">
+		<wsdl:part name="parameters" element="tns:SetEnqueueServerStopResponse" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetEnqueueServerDeletion_InputMessage">
+		<wsdl:part name="parameters" element="tns:SetEnqueueServerDeletion" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetEnqueueServerDeletion_OutputMessage">
+		<wsdl:part name="parameters" element="tns:SetEnqueueServerDeletionResponse" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetEnqueueServerReset_InputMessage">
+		<wsdl:part name="parameters" element="tns:SetEnqueueServerReset" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetEnqueueServerReset_OutputMessage">
+		<wsdl:part name="parameters" element="tns:SetEnqueueServerResetResponse" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetEnqueueServerRestart_InputMessage">
+		<wsdl:part name="parameters" element="tns:SetEnqueueServerRestart" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetEnqueueServerRestart_OutputMessage">
+		<wsdl:part name="parameters" element="tns:SetEnqueueServerRestartResponse" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetEnqueueServerPowerOff_InputMessage">
+		<wsdl:part name="parameters" element="tns:SetEnqueueServerPowerOff" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetEnqueueServerPowerOff_OutputMessage">
+		<wsdl:part name="parameters" element="tns:SetEnqueueServerPowerOffResponse" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetEnqueueServerArchiviation_InputMessage">
+		<wsdl:part name="parameters" element="tns:SetEnqueueServerArchiviation" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetEnqueueServerArchiviation_OutputMessage">
+		<wsdl:part name="parameters" element="tns:SetEnqueueServerArchiviationResponse" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetEnqueueServerRestore_InputMessage">
+		<wsdl:part name="parameters" element="tns:SetEnqueueServerRestore" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetEnqueueServerRestore_OutputMessage">
+		<wsdl:part name="parameters" element="tns:SetEnqueueServerRestoreResponse" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetRenameServer_InputMessage">
+		<wsdl:part name="parameters" element="tns:SetRenameServer" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetRenameServer_OutputMessage">
+		<wsdl:part name="parameters" element="tns:SetRenameServerResponse" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetEnqueueMountDvdIso_InputMessage">
+		<wsdl:part name="parameters" element="tns:SetEnqueueMountDvdIso" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetEnqueueMountDvdIso_OutputMessage">
+		<wsdl:part name="parameters" element="tns:SetEnqueueMountDvdIsoResponse" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetEnqueueUnmountDvdIso_InputMessage">
+		<wsdl:part name="parameters" element="tns:SetEnqueueUnmountDvdIso" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetEnqueueUnmountDvdIso_OutputMessage">
+		<wsdl:part name="parameters" element="tns:SetEnqueueUnmountDvdIsoResponse" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetEnqueueVirtualDiskExport_InputMessage">
+		<wsdl:part name="parameters" element="tns:SetEnqueueVirtualDiskExport" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetEnqueueVirtualDiskExport_OutputMessage">
+		<wsdl:part name="parameters" element="tns:SetEnqueueVirtualDiskExportResponse" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetEnqueueVirtualDiskManage_InputMessage">
+		<wsdl:part name="parameters" element="tns:SetEnqueueVirtualDiskManage" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetEnqueueVirtualDiskManage_OutputMessage">
+		<wsdl:part name="parameters" element="tns:SetEnqueueVirtualDiskManageResponse" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetEnqueueServerSnapshot_InputMessage">
+		<wsdl:part name="parameters" element="tns:SetEnqueueServerSnapshot" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetEnqueueServerSnapshot_OutputMessage">
+		<wsdl:part name="parameters" element="tns:SetEnqueueServerSnapshotResponse" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetChangeNoteServer_InputMessage">
+		<wsdl:part name="parameters" element="tns:SetChangeNoteServer" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetChangeNoteServer_OutputMessage">
+		<wsdl:part name="parameters" element="tns:SetChangeNoteServerResponse" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetPurchaseIpAddress_InputMessage">
+		<wsdl:part name="parameters" element="tns:SetPurchaseIpAddress" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetPurchaseIpAddress_OutputMessage">
+		<wsdl:part name="parameters" element="tns:SetPurchaseIpAddressResponse" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetRemoveIpAddress_InputMessage">
+		<wsdl:part name="parameters" element="tns:SetRemoveIpAddress" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetRemoveIpAddress_OutputMessage">
+		<wsdl:part name="parameters" element="tns:SetRemoveIpAddressResponse" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetEnqueueAssociateIpAddress_InputMessage">
+		<wsdl:part name="parameters" element="tns:SetEnqueueAssociateIpAddress" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetEnqueueAssociateIpAddress_OutputMessage">
+		<wsdl:part name="parameters" element="tns:SetEnqueueAssociateIpAddressResponse" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetEnqueueDeassociateIpAddress_InputMessage">
+		<wsdl:part name="parameters" element="tns:SetEnqueueDeassociateIpAddress" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetEnqueueDeassociateIpAddress_OutputMessage">
+		<wsdl:part name="parameters" element="tns:SetEnqueueDeassociateIpAddressResponse" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetPurchaseVLan_InputMessage">
+		<wsdl:part name="parameters" element="tns:SetPurchaseVLan" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetPurchaseVLan_OutputMessage">
+		<wsdl:part name="parameters" element="tns:SetPurchaseVLanResponse" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetRemoveVLan_InputMessage">
+		<wsdl:part name="parameters" element="tns:SetRemoveVLan" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetRemoveVLan_OutputMessage">
+		<wsdl:part name="parameters" element="tns:SetRemoveVLanResponse" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetRenameVLan_InputMessage">
+		<wsdl:part name="parameters" element="tns:SetRenameVLan" />
+	</wsdl:message>
+	<wsdl:message name="IWsEndUser_SetRenameVLan_OutputMessage">
+		<wsdl:part name="parameters" element="tns:SetRenameVLanResponse" />
+	</wsdl:message>
+	<wsdl:portType name="IWsEndUser">
+		<wsdl:operation name="SetEnqueueAssociateVLan">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueAssociateVLan"
+				message="tns:IWsEndUser_SetEnqueueAssociateVLan_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueAssociateVLanResponse"
+				message="tns:IWsEndUser_SetEnqueueAssociateVLan_OutputMessage" />
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueDeassociateVLan">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueDeassociateVLan"
+				message="tns:IWsEndUser_SetEnqueueDeassociateVLan_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueDeassociateVLanResponse"
+				message="tns:IWsEndUser_SetEnqueueDeassociateVLan_OutputMessage" />
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueCreateFTPAccount">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueCreateFTPAccount"
+				message="tns:IWsEndUser_SetEnqueueCreateFTPAccount_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueCreateFTPAccountResponse"
+				message="tns:IWsEndUser_SetEnqueueCreateFTPAccount_OutputMessage" />
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueResizeFTPAccount">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueResizeFTPAccount"
+				message="tns:IWsEndUser_SetEnqueueResizeFTPAccount_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueResizeFTPAccountResponse"
+				message="tns:IWsEndUser_SetEnqueueResizeFTPAccount_OutputMessage" />
+		</wsdl:operation>
+		<wsdl:operation name="GetVDCGraph">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetVDCGraph"
+				message="tns:IWsEndUser_GetVDCGraph_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetVDCGraphResponse"
+				message="tns:IWsEndUser_GetVDCGraph_OutputMessage" />
+		</wsdl:operation>
+		<wsdl:operation name="SetAddVDCGraph">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetAddVDCGraph"
+				message="tns:IWsEndUser_SetAddVDCGraph_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetAddVDCGraphResponse"
+				message="tns:IWsEndUser_SetAddVDCGraph_OutputMessage" />
+		</wsdl:operation>
+		<wsdl:operation name="SetUpdateVDCGraph">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetUpdateVDCGraph"
+				message="tns:IWsEndUser_SetUpdateVDCGraph_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetUpdateVDCGraphResponse"
+				message="tns:IWsEndUser_SetUpdateVDCGraph_OutputMessage" />
+		</wsdl:operation>
+		<wsdl:operation name="GetUserAuthenticationToken">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetUserAuthenticationToken"
+				message="tns:IWsEndUser_GetUserAuthenticationToken_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetUserAuthenticationTokenResponse"
+				message="tns:IWsEndUser_GetUserAuthenticationToken_OutputMessage" />
+		</wsdl:operation>
+		<wsdl:operation name="GetCompanyByUrl">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetCompanyByUrl"
+				message="tns:IWsEndUser_GetCompanyByUrl_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetCompanyByUrlResponse"
+				message="tns:IWsEndUser_GetCompanyByUrl_OutputMessage" />
+		</wsdl:operation>
+		<wsdl:operation name="GetHypervisors">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetHypervisors"
+				message="tns:IWsEndUser_GetHypervisors_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetHypervisorsResponse"
+				message="tns:IWsEndUser_GetHypervisors_OutputMessage" />
+		</wsdl:operation>
+		<wsdl:operation name="GetVirtualDatacenter">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetVirtualDatacenter"
+				message="tns:IWsEndUser_GetVirtualDatacenter_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetVirtualDatacenterResponse"
+				message="tns:IWsEndUser_GetVirtualDatacenter_OutputMessage" />
+		</wsdl:operation>
+		<wsdl:operation name="GetVirtualDatacenterCost">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetVirtualDatacenterCost"
+				message="tns:IWsEndUser_GetVirtualDatacenterCost_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetVirtualDatacenterCostResponse"
+				message="tns:IWsEndUser_GetVirtualDatacenterCost_OutputMessage" />
+		</wsdl:operation>
+		<wsdl:operation name="GetServers">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetServers"
+				message="tns:IWsEndUser_GetServers_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetServersResponse"
+				message="tns:IWsEndUser_GetServers_OutputMessage" />
+		</wsdl:operation>
+		<wsdl:operation name="GetServerDetails">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetServerDetails"
+				message="tns:IWsEndUser_GetServerDetails_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetServerDetailsResponse"
+				message="tns:IWsEndUser_GetServerDetails_OutputMessage" />
+		</wsdl:operation>
+		<wsdl:operation name="GetCredit">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetCredit"
+				message="tns:IWsEndUser_GetCredit_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetCreditResponse"
+				message="tns:IWsEndUser_GetCredit_OutputMessage" />
+		</wsdl:operation>
+		<wsdl:operation name="GetPriceList">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetPriceList"
+				message="tns:IWsEndUser_GetPriceList_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetPriceListResponse"
+				message="tns:IWsEndUser_GetPriceList_OutputMessage" />
+		</wsdl:operation>
+		<wsdl:operation name="GetPurchasedVLans">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetPurchasedVLans"
+				message="tns:IWsEndUser_GetPurchasedVLans_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetPurchasedVLansResponse"
+				message="tns:IWsEndUser_GetPurchasedVLans_OutputMessage" />
+		</wsdl:operation>
+		<wsdl:operation name="GetPurchasedIpAddresses">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetPurchasedIpAddresses"
+				message="tns:IWsEndUser_GetPurchasedIpAddresses_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetPurchasedIpAddressesResponse"
+				message="tns:IWsEndUser_GetPurchasedIpAddresses_OutputMessage" />
+		</wsdl:operation>
+		<wsdl:operation name="GetJobs">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetJobs"
+				message="tns:IWsEndUser_GetJobs_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetJobsResponse"
+				message="tns:IWsEndUser_GetJobs_OutputMessage" />
+		</wsdl:operation>
+		<wsdl:operation name="GetLogs">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetLogs"
+				message="tns:IWsEndUser_GetLogs_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetLogsResponse"
+				message="tns:IWsEndUser_GetLogs_OutputMessage" />
+		</wsdl:operation>
+		<wsdl:operation name="GetDatacenterConfigurations">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetDatacenterConfigurations"
+				message="tns:IWsEndUser_GetDatacenterConfigurations_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetDatacenterConfigurationsResponse"
+				message="tns:IWsEndUser_GetDatacenterConfigurations_OutputMessage" />
+		</wsdl:operation>
+		<wsdl:operation name="GetCustomVirtualDisks">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetCustomVirtualDisks"
+				message="tns:IWsEndUser_GetCustomVirtualDisks_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetCustomVirtualDisksResponse"
+				message="tns:IWsEndUser_GetCustomVirtualDisks_OutputMessage" />
+		</wsdl:operation>
+		<wsdl:operation name="GetIsos">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetIsos"
+				message="tns:IWsEndUser_GetIsos_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetIsosResponse"
+				message="tns:IWsEndUser_GetIsos_OutputMessage" />
+		</wsdl:operation>
+		<wsdl:operation name="GetUserInfo">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetUserInfo"
+				message="tns:IWsEndUser_GetUserInfo_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetUserInfoResponse"
+				message="tns:IWsEndUser_GetUserInfo_OutputMessage" />
+		</wsdl:operation>
+		<wsdl:operation name="GetPurchasedFTP">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetPurchasedFTP"
+				message="tns:IWsEndUser_GetPurchasedFTP_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetPurchasedFTPResponse"
+				message="tns:IWsEndUser_GetPurchasedFTP_OutputMessage" />
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueServerCreation">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueServerCreation"
+				message="tns:IWsEndUser_SetEnqueueServerCreation_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueServerCreationResponse"
+				message="tns:IWsEndUser_SetEnqueueServerCreation_OutputMessage" />
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueServerUpdate">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueServerUpdate"
+				message="tns:IWsEndUser_SetEnqueueServerUpdate_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueServerUpdateResponse"
+				message="tns:IWsEndUser_SetEnqueueServerUpdate_OutputMessage" />
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueServerStart">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueServerStart"
+				message="tns:IWsEndUser_SetEnqueueServerStart_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueServerStartResponse"
+				message="tns:IWsEndUser_SetEnqueueServerStart_OutputMessage" />
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueServerStop">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueServerStop"
+				message="tns:IWsEndUser_SetEnqueueServerStop_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueServerStopResponse"
+				message="tns:IWsEndUser_SetEnqueueServerStop_OutputMessage" />
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueServerDeletion">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueServerDeletion"
+				message="tns:IWsEndUser_SetEnqueueServerDeletion_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueServerDeletionResponse"
+				message="tns:IWsEndUser_SetEnqueueServerDeletion_OutputMessage" />
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueServerReset">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueServerReset"
+				message="tns:IWsEndUser_SetEnqueueServerReset_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueServerResetResponse"
+				message="tns:IWsEndUser_SetEnqueueServerReset_OutputMessage" />
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueServerRestart">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueServerRestart"
+				message="tns:IWsEndUser_SetEnqueueServerRestart_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueServerRestartResponse"
+				message="tns:IWsEndUser_SetEnqueueServerRestart_OutputMessage" />
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueServerPowerOff">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueServerPowerOff"
+				message="tns:IWsEndUser_SetEnqueueServerPowerOff_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueServerPowerOffResponse"
+				message="tns:IWsEndUser_SetEnqueueServerPowerOff_OutputMessage" />
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueServerArchiviation">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueServerArchiviation"
+				message="tns:IWsEndUser_SetEnqueueServerArchiviation_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueServerArchiviationResponse"
+				message="tns:IWsEndUser_SetEnqueueServerArchiviation_OutputMessage" />
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueServerRestore">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueServerRestore"
+				message="tns:IWsEndUser_SetEnqueueServerRestore_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueServerRestoreResponse"
+				message="tns:IWsEndUser_SetEnqueueServerRestore_OutputMessage" />
+		</wsdl:operation>
+		<wsdl:operation name="SetRenameServer">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetRenameServer"
+				message="tns:IWsEndUser_SetRenameServer_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetRenameServerResponse"
+				message="tns:IWsEndUser_SetRenameServer_OutputMessage" />
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueMountDvdIso">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueMountDvdIso"
+				message="tns:IWsEndUser_SetEnqueueMountDvdIso_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueMountDvdIsoResponse"
+				message="tns:IWsEndUser_SetEnqueueMountDvdIso_OutputMessage" />
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueUnmountDvdIso">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueUnmountDvdIso"
+				message="tns:IWsEndUser_SetEnqueueUnmountDvdIso_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueUnmountDvdIsoResponse"
+				message="tns:IWsEndUser_SetEnqueueUnmountDvdIso_OutputMessage" />
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueVirtualDiskExport">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueVirtualDiskExport"
+				message="tns:IWsEndUser_SetEnqueueVirtualDiskExport_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueVirtualDiskExportResponse"
+				message="tns:IWsEndUser_SetEnqueueVirtualDiskExport_OutputMessage" />
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueVirtualDiskManage">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueVirtualDiskManage"
+				message="tns:IWsEndUser_SetEnqueueVirtualDiskManage_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueVirtualDiskManageResponse"
+				message="tns:IWsEndUser_SetEnqueueVirtualDiskManage_OutputMessage" />
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueServerSnapshot">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueServerSnapshot"
+				message="tns:IWsEndUser_SetEnqueueServerSnapshot_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueServerSnapshotResponse"
+				message="tns:IWsEndUser_SetEnqueueServerSnapshot_OutputMessage" />
+		</wsdl:operation>
+		<wsdl:operation name="SetChangeNoteServer">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetChangeNoteServer"
+				message="tns:IWsEndUser_SetChangeNoteServer_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetChangeNoteServerResponse"
+				message="tns:IWsEndUser_SetChangeNoteServer_OutputMessage" />
+		</wsdl:operation>
+		<wsdl:operation name="SetPurchaseIpAddress">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetPurchaseIpAddress"
+				message="tns:IWsEndUser_SetPurchaseIpAddress_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetPurchaseIpAddressResponse"
+				message="tns:IWsEndUser_SetPurchaseIpAddress_OutputMessage" />
+		</wsdl:operation>
+		<wsdl:operation name="SetRemoveIpAddress">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetRemoveIpAddress"
+				message="tns:IWsEndUser_SetRemoveIpAddress_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetRemoveIpAddressResponse"
+				message="tns:IWsEndUser_SetRemoveIpAddress_OutputMessage" />
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueAssociateIpAddress">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueAssociateIpAddress"
+				message="tns:IWsEndUser_SetEnqueueAssociateIpAddress_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueAssociateIpAddressResponse"
+				message="tns:IWsEndUser_SetEnqueueAssociateIpAddress_OutputMessage" />
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueDeassociateIpAddress">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueDeassociateIpAddress"
+				message="tns:IWsEndUser_SetEnqueueDeassociateIpAddress_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueDeassociateIpAddressResponse"
+				message="tns:IWsEndUser_SetEnqueueDeassociateIpAddress_OutputMessage" />
+		</wsdl:operation>
+		<wsdl:operation name="SetPurchaseVLan">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetPurchaseVLan"
+				message="tns:IWsEndUser_SetPurchaseVLan_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetPurchaseVLanResponse"
+				message="tns:IWsEndUser_SetPurchaseVLan_OutputMessage" />
+		</wsdl:operation>
+		<wsdl:operation name="SetRemoveVLan">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetRemoveVLan"
+				message="tns:IWsEndUser_SetRemoveVLan_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetRemoveVLanResponse"
+				message="tns:IWsEndUser_SetRemoveVLan_OutputMessage" />
+		</wsdl:operation>
+		<wsdl:operation name="SetRenameVLan">
+			<wsdl:input
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetRenameVLan"
+				message="tns:IWsEndUser_SetRenameVLan_InputMessage" />
+			<wsdl:output
+				wsaw:Action="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetRenameVLanResponse"
+				message="tns:IWsEndUser_SetRenameVLan_OutputMessage" />
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="HttpsEndpoint" type="tns:IWsEndUser">
+		<wsp:PolicyReference URI="#HttpsEndpoint_policy" />
+		<soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="SetEnqueueAssociateVLan">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueAssociateVLan"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueDeassociateVLan">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueDeassociateVLan"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueCreateFTPAccount">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueCreateFTPAccount"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueResizeFTPAccount">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueResizeFTPAccount"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetVDCGraph">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetVDCGraph"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetAddVDCGraph">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetAddVDCGraph"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetUpdateVDCGraph">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetUpdateVDCGraph"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetUserAuthenticationToken">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetUserAuthenticationToken"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetCompanyByUrl">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetCompanyByUrl"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetHypervisors">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetHypervisors"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetVirtualDatacenter">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetVirtualDatacenter"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetVirtualDatacenterCost">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetVirtualDatacenterCost"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetServers">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetServers"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetServerDetails">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetServerDetails"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetCredit">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetCredit"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetPriceList">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetPriceList"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetPurchasedVLans">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetPurchasedVLans"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetPurchasedIpAddresses">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetPurchasedIpAddresses"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetJobs">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetJobs"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetLogs">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetLogs"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetDatacenterConfigurations">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetDatacenterConfigurations"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetCustomVirtualDisks">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetCustomVirtualDisks"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetIsos">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetIsos"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetUserInfo">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetUserInfo"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetPurchasedFTP">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetPurchasedFTP"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueServerCreation">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueServerCreation"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueServerUpdate">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueServerUpdate"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueServerStart">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueServerStart"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueServerStop">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueServerStop"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueServerDeletion">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueServerDeletion"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueServerReset">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueServerReset"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueServerRestart">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueServerRestart"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueServerPowerOff">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueServerPowerOff"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueServerArchiviation">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueServerArchiviation"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueServerRestore">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueServerRestore"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetRenameServer">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetRenameServer"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueMountDvdIso">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueMountDvdIso"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueUnmountDvdIso">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueUnmountDvdIso"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueVirtualDiskExport">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueVirtualDiskExport"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueVirtualDiskManage">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueVirtualDiskManage"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueServerSnapshot">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueServerSnapshot"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetChangeNoteServer">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetChangeNoteServer"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetPurchaseIpAddress">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetPurchaseIpAddress"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetRemoveIpAddress">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetRemoveIpAddress"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueAssociateIpAddress">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueAssociateIpAddress"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueDeassociateIpAddress">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueDeassociateIpAddress"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetPurchaseVLan">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetPurchaseVLan"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetRemoveVLan">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetRemoveVLan"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetRenameVLan">
+			<soap12:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetRenameVLan"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="BasicHttpsEndpoint" type="tns:IWsEndUser">
+		<wsp:PolicyReference URI="#BasicHttpsEndpoint_policy" />
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="SetEnqueueAssociateVLan">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueAssociateVLan"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueDeassociateVLan">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueDeassociateVLan"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueCreateFTPAccount">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueCreateFTPAccount"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueResizeFTPAccount">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueResizeFTPAccount"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetVDCGraph">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetVDCGraph"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetAddVDCGraph">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetAddVDCGraph"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetUpdateVDCGraph">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetUpdateVDCGraph"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetUserAuthenticationToken">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetUserAuthenticationToken"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetCompanyByUrl">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetCompanyByUrl"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetHypervisors">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetHypervisors"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetVirtualDatacenter">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetVirtualDatacenter"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetVirtualDatacenterCost">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetVirtualDatacenterCost"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetServers">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetServers"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetServerDetails">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetServerDetails"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetCredit">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetCredit"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetPriceList">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetPriceList"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetPurchasedVLans">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetPurchasedVLans"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetPurchasedIpAddresses">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetPurchasedIpAddresses"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetJobs">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetJobs"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetLogs">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetLogs"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetDatacenterConfigurations">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetDatacenterConfigurations"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetCustomVirtualDisks">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetCustomVirtualDisks"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetIsos">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetIsos"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetUserInfo">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetUserInfo"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetPurchasedFTP">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/GetPurchasedFTP"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueServerCreation">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueServerCreation"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueServerUpdate">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueServerUpdate"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueServerStart">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueServerStart"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueServerStop">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueServerStop"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueServerDeletion">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueServerDeletion"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueServerReset">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueServerReset"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueServerRestart">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueServerRestart"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueServerPowerOff">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueServerPowerOff"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueServerArchiviation">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueServerArchiviation"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueServerRestore">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueServerRestore"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetRenameServer">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetRenameServer"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueMountDvdIso">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueMountDvdIso"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueUnmountDvdIso">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueUnmountDvdIso"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueVirtualDiskExport">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueVirtualDiskExport"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueVirtualDiskManage">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueVirtualDiskManage"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueServerSnapshot">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueServerSnapshot"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetChangeNoteServer">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetChangeNoteServer"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetPurchaseIpAddress">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetPurchaseIpAddress"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetRemoveIpAddress">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetRemoveIpAddress"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueAssociateIpAddress">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueAssociateIpAddress"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetEnqueueDeassociateIpAddress">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetEnqueueDeassociateIpAddress"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetPurchaseVLan">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetPurchaseVLan"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetRemoveVLan">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetRemoveVLan"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetRenameVLan">
+			<soap:operation
+				soapAction="https://api.computing.cloud.it/WsEndUser/v1.4/IWsEndUser/SetRenameVLan"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="WsEndUser">
+		<wsdl:port name="HttpsEndpoint" binding="tns:HttpsEndpoint">
+			<soap12:address
+				location="https://api.dc1.computing.cloud.it/WsEndUser/v1.4/WsEndUser.svc" />
+			<wsa10:EndpointReference>
+				<wsa10:Address>https://api.dc1.computing.cloud.it/WsEndUser/v1.4/WsEndUser.svc
+				</wsa10:Address>
+			</wsa10:EndpointReference>
+		</wsdl:port>
+		<wsdl:port name="BasicHttpsEndpoint" binding="tns:BasicHttpsEndpoint">
+			<soap:address
+				location="https://api.dc1.computing.cloud.it/WsEndUser/v1.4/WsEndUser.svc/soap11" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,69 @@
+<%
+/**
+ *
+ * Copyright (c) 2012 <copyright Aruba spa>
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+ * and associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+ * IN THE SOFTWARE.
+ *
+ */
+%>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="s" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
+
+<div id="srvStopDlg"  title="<fmt:message key='Server.stop.options'/>" class="form">
+	<form id="srvStopDlgForm" action="" method="post">
+		<div><fmt:message key='choose.stop.method'/></div>
+		<div align="center" style="width: 100%;">
+				<button type='button' id='srvStopShutdownBtn'><fmt:message key='Shutdown'/></button>
+				<button type='button' id='srvStopPowerOffBtn'><fmt:message key='Power.Off'/></button>
+				<button type='button' id='srvStopResetBtn'><fmt:message key='Reset'/></button>
+		</div>
+	</form>
+</div>
+
+<script type="text/javascript">
+		$('#srvStopDlg').dialog({width:500, autoOpen:false, modal:true, resizable:false });
+		$('#srvStopShutdownBtn').button({
+		        icons: {
+		             primary: "ui-icon-power"
+		        }
+		        <c:if test="${!CloudServer.shutdownAvailable}">
+				,disabled:true
+				</c:if>
+		});
+		$('#srvStopPowerOffBtn').button({
+		        icons: {
+		             primary: "ui-icon-power"
+		        }
+		});
+		$('#srvStopResetBtn').button({
+	        icons: {
+	             primary: "ui-icon-power"
+	        }
+		});
+		$('#srvStopShutdownBtn').click(function(){
+			postForm('srvStopDlgForm','srvStopShutdownBtn','<c:url value="/cloudServers/stop/${CloudServer.appServerDetail.serverId}"/>',null, true);
+		});
+
+		$('#srvStopPowerOffBtn').click(function(){
+			postForm('srvStopDlgForm','srvStopPowerOffBtn','<c:url value="/cloudServers/powerOff/${CloudServer.appServerDetail.serverId}"/>',null, true);
+		});
+		$('#srvStopResetBtn').click(function(){
+			postForm('srvStopDlgForm','srvStopResetBtn','<c:url value="/cloudServers/reset/${CloudServer.appServerDetail.serverId}"/>',null, true);
+		});
+</script>

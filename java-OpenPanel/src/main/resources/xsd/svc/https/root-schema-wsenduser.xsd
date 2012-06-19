@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="https://api.computing.cloud.it/WsEndUser/v1.4/Imports" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+			<xsd:import
+				schemaLocation="https://api.dc1.computing.cloud.it/WsEndUser/v1.4/WsEndUser.svc?xsd=xsd0"
+				namespace="https://api.computing.cloud.it/WsEndUser/v1.4" />
+			<xsd:import
+				schemaLocation="https://api.dc1.computing.cloud.it/WsEndUser/v1.4/WsEndUser.svc?xsd=xsd1"
+				namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+			<xsd:import
+				schemaLocation="https://api.dc1.computing.cloud.it/WsEndUser/v1.4/WsEndUser.svc?xsd=xsd2"
+				namespace="http://schemas.datacontract.org/2004/07/Aruba.Cloud.Common" />
+			<xsd:import
+				schemaLocation="https://api.dc1.computing.cloud.it/WsEndUser/v1.4/WsEndUser.svc?xsd=xsd3"
+				namespace="http://schemas.datacontract.org/2004/07/" />
+			<xsd:import
+				schemaLocation="https://api.dc1.computing.cloud.it/WsEndUser/v1.4/WsEndUser.svc?xsd=xsd4"
+				namespace="http://schemas.datacontract.org/2004/07/Aruba.Cloud.Provisioning.Entities" />
+			<xsd:import
+				schemaLocation="https://api.dc1.computing.cloud.it/WsEndUser/v1.4/WsEndUser.svc?xsd=xsd5"
+				namespace="http://schemas.datacontract.org/2004/07/Aruba.Cloud.WsEndUser.Business.Entities" />
+			<xsd:import
+				schemaLocation="https://api.dc1.computing.cloud.it/WsEndUser/v1.4/WsEndUser.svc?xsd=xsd6"
+				namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+</xsd:schema>

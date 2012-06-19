@@ -1,0 +1,89 @@
+<%
+/**
+ *
+ * Copyright (c) 2012 <copyright Aruba spa>
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+ * and associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+ * IN THE SOFTWARE.
+ *
+ */
+%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
+<script type="text/javascript" charset="utf-8" src="<c:url value="/resources/jquery/jquery-1.7.1.min.js" />"></script>
+<script type="text/javascript" src="<c:url value="/resources/json2.js" />"></script>
+<script type="text/javascript" src="<c:url value="/resources/jqueryui/1.8/jquery-ui-1.8.18.min.js" />"></script>
+
+
+<script>
+
+	function postForm(formId, senderId, postAction, confirmMsg, showWaitDlg){
+	    	confirmed = true;
+	    	if(confirmMsg!=null){
+	    		if(!confirm(confirmMsg)){
+	    			confirmed=false;
+	    		}
+	    	}
+	    	if(confirmed){
+		    	if(postAction!=null){
+	    			$("#"+formId).attr("action",postAction);
+		    	}
+	    		$("#"+senderId).button('disable');
+	    		$("#"+formId).submit();
+
+	    		if(showWaitDlg){
+	    			var	dialog = $('<div id="waitDialog"  style="display:hidden" title="Please wait...."><br><div align="center"><span id="waitDialog_text"><fmt:message key='please.wait'/></span></div></div>').appendTo('body');
+	    			$("#waitDialog").dialog({ autoOpen: true, modal:true, resizable:false });
+	    			$(".ui-dialog-titlebar").hide();
+	    			$("#waitDialog_text").hide();
+	    			$("#waitDialog_text").show('slow');
+	    		}
+	    	}
+	}
+
+	function ajaxSelectChange(selectId,ajaxUrl,urlData){
+		$.getJSON(ajaxUrl,urlData, function(j){
+			var options = '<option value="">...</option>';
+			for (var i = 0; i < j.length; i++) {
+				options += '<option value="' + j[i].itemId + '">' + j[i].description + '</option>';
+			}
+			$("#"+selectId).html(options);
+		})
+	}
+
+	function selectClear(selectId,emtpyDescription){
+		if($("#"+selectId)!=null){
+			if(emtpyDescription==null){
+				emtpyDescription="...";
+			}
+			var options = '<option value="">'+emtpyDescription+'</option>';
+			$("#"+selectId).html(options);
+		}
+	}
+
+	function showDialog(title,dialogUrl,dlgWidth){
+
+		var	dialog = $('<div  style="display:hidden" title="'+title+'"></div>').appendTo('body');
+
+		dialog.load(
+               dialogUrl,
+               {},
+               function (responseText, textStatus, XMLHttpRequest) {
+                   dialog.dialog(
+					{minWidth:dlgWidth, modal:true}
+                   );
+               }
+           );
+		return false;
+	}
+
+</script>

@@ -1,0 +1,154 @@
+
+div#displayTag table {
+	border: 1px solid #666;
+	width: 100%;
+	margin: 8px 2px 10px 0px !important;
+}
+
+div#displayTag th,div#displayTag td {
+	padding: 2px 4px 2px 4px !important;
+	text-align: left;
+	vertical-align: top;
+}
+
+div#displayTag thead tr {
+	background-color:#CDE1F3 ;
+}
+
+div#displayTag tbody  {
+	padding: 5px 2px 5px 2px !important;
+}
+
+div#displayTag th.sorted {
+	background-color:#6699aa;
+}
+
+div#displayTag th a,div#displayTag th a:visited {
+	color: black;
+}
+
+div#displayTag th a:hover {
+	text-decoration: underline;
+	color: black;
+}
+
+div#displayTag th.sorted a, div#displayTag th.sortable a {
+	background-position: right;
+	display: block;
+	width: 100%;
+}
+
+div#displayTag th.sortable a {
+	background-repeat:no-repeat;
+	background-image: url(../img/arrow_off.png);
+}
+
+div#displayTag th.order1 a {
+	background-image: url(../img/arrow_down.png);
+}
+
+div#displayTag th.order2 a {
+	background-image: url(../img/arrow_up.png);
+}
+
+div#displayTag tr.odd {
+	background-color: #fff
+}
+
+div#displayTag tr.tableRowEven,div#displayTag tr.even {
+	background-color: #E7EBEF
+}
+
+div#displayTag span.pagebanner {
+	/*background-color: #eee;*/
+	border: 1px dotted #999;
+	padding: 2px 4px 2px 4px;
+	width: 99%;
+	margin-top: 10px;
+	display: block;
+	border-bottom: none;
+}
+
+div#displayTag span.pagelinks {
+	/*background-color: #eee;*/
+	border: 1px dotted #999;
+	padding: 2px 4px 2px 4px;
+	width: 99%;
+	display: block;
+	border-top: none;
+	margin-bottom: -5px;
+}
+
+div#displayTag div.exportlinks {
+	/*background-color: #eee;*/
+	border: 1px dotted #999;
+	padding: 2px 4px 2px 4px;
+	margin: 2px 0 10px 0;
+	width: 99%;
+}
+
+div#displayTag span.export {
+	padding: 0 4px 1px 20px;
+	display: inline;
+	display: inline-block;
+	cursor: pointer;
+}
+
+div#displayTag span.excel {
+	background-repeat:no-repeat;
+	background-image: url(../img/ico_file_excel.png);
+}
+
+div#displayTag span.csv {
+	background-repeat:no-repeat;
+	background-image: url(../img/ico_file_csv.png);
+}
+
+div#displayTag span.xml {
+	background-repeat:no-repeat;
+	background-image: url(../img/ico_file_xml.png);
+}
+
+div#displayTag span.pdf {
+	background-repeat:no-repeat;
+	background-image: url(../img/ico_file_pdf.png);
+}
+
+div#displayTag span.rtf {
+	background-repeat:no-repeat;
+	background-image: url(../img/ico_file_rtf.png);
+}
+
+/*
+.group-1 {
+    font-weight:bold;
+    padding-bottom:10px;
+    border-top:1px solid black;
+}
+.group-2 {
+    font-style:italic;
+    border-top: 1px solid black;
+
+}
+.subtotal-sum, .grandtotal-sum {
+    font-weight:bold;
+    text-align:right;
+}
+.subtotal-header {
+    padding-bottom: 0px;
+    border-top: 1px solid white;
+}
+.subtotal-label, .grandtotal-label {
+    border-top: 1px solid white;
+    font-weight: bold;
+}
+.grouped-table tr.even {
+    background-color: #fff;
+}
+.grouped-table tr.odd {
+    background-color: #fff;
+}
+.grandtotal-row {
+    border-top: 2px solid black;
+}
+*/

@@ -1,0 +1,76 @@
+<%
+/**
+ *
+ * Copyright (c) 2012 <copyright Aruba spa>
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+ * and associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+ * IN THE SOFTWARE.
+ *
+ */
+%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="s" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
+
+<button type="button" id='changeRamsBtn'><fmt:message key='Edit'/></button>
+<span id='editServerRams'>
+	<form:form commandName="changeRAM" method="post" id="changeRamForm" cssStyle=" display:inline">
+		<form:select path="rams">
+			<c:forEach begin="${CloudServer.appRAMsBound.min}" end="${CloudServer.appRAMsBound.max}" var="counter">
+				<form:option value="${counter}" label="${counter}"/>
+			</c:forEach>
+		</form:select>
+		<button type="button" id='changeRamsOkBtn'><fmt:message key='Apply'/></button>
+		<button type="button" id='changeRamsKOBtn'><fmt:message key='Abort'/></button>
+	</form:form>
+
+</span>
+<script type="text/javascript">
+	$('#editServerRams').hide();
+
+	$('#changeRamsBtn').button({text:false,icons:{primary:'ui-icon-pencil'}});
+	$('#changeRamsOkBtn').button({text:false,icons:{primary:'ui-icon-check'}});
+	$('#changeRamsKOBtn').button({text:false,icons:{primary:'ui-icon-closethick'}});
+	$('#changeRamsBtn').click(function(){
+		$('#editServerRams').show();
+		$(':button').button('disable');
+		$('#changeRamsOkBtn').button('enable');
+		$('#changeRamsKOBtn').button('enable');
+	});
+
+	$('#changeRamsKOBtn').click(function(){
+		$('#editServerRams').hide();
+		$(':button').button('enable');
+	});
+	$('#changeRamsOkBtn').click(function(){
+		postForm('changeRamForm',
+				'changeRamsOkBtn',
+				'<c:url value="/cloudServers/modifyRams/${CloudServer.appServerDetail.serverId}"/>',
+				'<fmt:message key='modifyRam.confirm'/>',
+				true);
+	});
+
+	<c:if test="${showServerCpusEdit==true}">
+		$(document).ready(function(){
+			$('#editServerRams').show();
+			$(':button').button('disable');
+			$('#changeRamsOkBtn').button('enable');
+			$('#changeRamsKOBtn').button('enable');
+		});
+	</c:if>
+	<c:if test="${!CloudServer.appServerDetail.stopped}">
+		$('#changeRamsBtn').button('disable');
+	</c:if>
+</script>

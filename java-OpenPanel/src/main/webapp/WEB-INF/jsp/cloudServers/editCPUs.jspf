@@ -1,0 +1,75 @@
+<%
+/**
+ *
+ * Copyright (c) 2012 <copyright Aruba spa>
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+ * and associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+ * IN THE SOFTWARE.
+ *
+ */
+%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="s" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
+
+<button type="button" id='changeCpusBtn'><fmt:message key='Edit'/></button>
+<span id='editServerCpus'>
+	<form:form commandName="changeCPU"  method="post" id="changeCpuForm" cssStyle=" display:inline">
+		<form:select path="cpus">
+			<c:forEach begin="${CloudServer.appCPUsBound.min}" end="${CloudServer.appCPUsBound.max}" var="counter">
+				<form:option value="${counter}" label="${counter}"/>
+			</c:forEach>
+		</form:select>
+		<button type="button" id='changeCpusOkBtn'><fmt:message key='Apply'/></button>
+		<button type="button" id='changeCpusKOBtn'><fmt:message key='Abort'/></button>
+	</form:form>
+</span>
+<script type="text/javascript">
+	$('#editServerCpus').hide();
+
+	$('#changeCpusBtn').button({text:false,icons:{primary:'ui-icon-pencil'}});
+	$('#changeCpusOkBtn').button({text:false,icons:{primary:'ui-icon-check'}});
+	$('#changeCpusKOBtn').button({text:false,icons:{primary:'ui-icon-closethick'}});
+	$('#changeCpusBtn').click(function(){
+		$('#editServerCpus').show();
+		$(':button').button('disable');
+		$('#changeCpusOkBtn').button('enable');
+		$('#changeCpusKOBtn').button('enable');
+	});
+
+	$('#changeCpusKOBtn').click(function(){
+		$('#editServerCpus').hide();
+		$(':button').button('enable');
+	});
+	$('#changeCpusOkBtn').click(function(){
+		postForm('changeCpuForm',
+				'changeCpusOkBtn',
+				'<c:url value="/cloudServers/modifyCpus/${CloudServer.appServerDetail.serverId}"/>',
+				'<fmt:message key='modifyCpu.confirm'/>',
+				true);
+	});
+
+	<c:if test="${showServerCpusEdit==true}">
+		$(document).ready(function(){
+			$('#editServerCpus').show();
+			$(':button').button('disable');
+			$('#changeCpusOkBtn').button('enable');
+			$('#changeCpusKOBtn').button('enable');
+		});
+	</c:if>
+	<c:if test="${!CloudServer.appServerDetail.stopped}">
+		$('#changeCpusBtn').button('disable');
+	</c:if>
+</script>

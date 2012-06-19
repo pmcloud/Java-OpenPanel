@@ -1,0 +1,63 @@
+/************************************************************
+* Definizione di stili AGGIUNTIVI rispetto a quelli di JQuery
+* per il completamento del tema.
+************************************************************/
+
+
+
+/* Usato per evidenziare le righe della tabella al passaggio del mouse */
+.hiliner-even {
+}
+.hiliner-even:hover {
+	background: silver;
+}
+
+.hiliner-odd {
+	background-color: #DDDDDE;
+}
+.hiliner-odd:hover {
+	background: silver;
+	color: black;
+}
+
+/* Links, visited-links ecc. */
+a, a:visited, a:hover {
+	color: #666;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+/* Usato per evidenziare il campo di input che ha il focus */
+input:focus {
+	font-weight:bolder;
+	/*background-color: #CCDDEE;*/
+}
+
+/* Usato per evidenziare le etichette associate ai campi obbligatori */
+.mandatory{
+	font-weight: bold;
+	text-decoration: underline;
+	background-image: url("./images/asterisco.gif");
+	background-repeat: no-repeat;
+	background-position: right;
+	padding-right: 16px;
+}
+
+/* Usato per evidenziare le etichette associate ai campi opzionali */
+.optional{
+}
+
+/* Usato per gli input readonly */
+.enabled-false11{
+	background-color: #eeeeee;
+}
+
+/* Usato per gli input editabili */
+.enabled-true11{
+}
+
+
+

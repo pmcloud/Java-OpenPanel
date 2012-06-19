@@ -1,0 +1,311 @@
+<%
+/**
+ *
+ * Copyright (c) 2012 <copyright Aruba spa>
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+ * and associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+ * IN THE SOFTWARE.
+ *
+ */
+%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="s" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
+
+			<br>
+			<table cellpadding="0" cellspacing="0" width="100%">
+			<tr>
+				<th colspan="4"><fmt:message key='Network.Adapters' /></th>
+			</tr>
+			<c:set value="1" var="num" scope="page"/>
+			<c:forEach items="${CloudServer.appServerDetail.networkAdapters}" var="networkAdapter">
+
+			<tr>
+				<td nowrap="nowrap"><fmt:message key='ETHERNET0${num}'/></td>
+				<td>
+					<c:choose>
+						<c:when test="${networkAdapter.connected}">
+							<span style="color:green;"><fmt:message key='CONNECTED'/></span>
+						</c:when>
+						<c:otherwise>
+							<span style="color:gray;"><fmt:message key='DISCONNECTED'/></span>
+						</c:otherwise>
+					</c:choose>
+				</td>
+				<td>
+					<c:choose>
+						<c:when test="${networkAdapter.connected}">
+							<c:choose>
+								<c:when test="${networkAdapter.associatedToPublicIPs}">
+									<c:forEach items="${networkAdapter.IPAddresses}" var="ipAddress">
+										[${ipAddress.value}]
+									</c:forEach>
+								</c:when>
+								<c:otherwise>
+									${networkAdapter.VLanName}
+								</c:otherwise>
+							</c:choose>
+						</c:when>
+						<c:otherwise>
+							---
+						</c:otherwise>
+					</c:choose>
+
+				</td>
+				<td nowrap="nowrap">
+					<c:if test="${num==1}">
+						<c:choose>
+							<c:when test="${!networkAdapter.connected}">
+								<button type="button" id="addIpBtn"><fmt:message key='Add.IPs'/></button>
+							</c:when>
+							<c:otherwise>
+								<c:if test="${networkAdapter.associatedToPublicIPs}">
+									<button type="button" id="addIpBtn"><fmt:message key='Add.IPs'/></button>
+									<button type="button" id="delIpBtn"><fmt:message key='Remove.IPs'/></button>
+								</c:if>
+							</c:otherwise>
+						</c:choose>
+						<script type="text/javascript">
+
+							$('#addIpBtn').button({
+							        icons: {
+						             primary: "ui-icon-circle-plus"
+						        }
+							});
+
+							$('#addIpBtn').click(function(){
+								$('#ipAddNetAdpId').attr('value',${networkAdapter.id});
+								$('#addIpDlg').dialog('open');
+								});
+							$('#delIpBtn').button({
+						        	icons: {
+					             		primary: "ui-icon-circle-minus"
+					        		}
+							});
+							$('#delIpBtn').click(function(){
+								$('#ipDelNetAdpId').attr('value',${networkAdapter.id});
+								$('#delIpDlg').dialog('open');
+							});
+						</script>
+					</c:if>
+					<c:choose>
+							<c:when test="${!networkAdapter.connected}">
+								<button type="button" id="addVlan${num}Btn"><fmt:message key='Connect.Virtual.Switch'/></button>
+								<script type="text/javascript">
+									$('#addVlan${num}Btn').button({
+									        icons: {
+								             primary: "ui-icon-circle-plus"
+								        }
+									});
+									$('#addVlan${num}Btn').click(function(){
+										$('#vlanNetAdpId').attr('value',${networkAdapter.id});
+										$('#addVlanDlg').dialog('open');
+									});
+								</script>
+							</c:when>
+							<c:otherwise>
+								<c:if test="${networkAdapter.associatedToVirtualSwitch}">
+									<button  type="button" id="delVlan${num}Btn"><fmt:message key='Disconnect'/></button>
+									<script type="text/javascript">
+										$('#delVlan${num}Btn').button({
+										        icons: {
+									             primary: "ui-icon-circle-minus"
+									        }
+										});
+										$('#delVlan${num}Btn').click(function(){
+											$('#delVlanForm_vlanNetAdpId').attr('value',${networkAdapter.id});
+											$('#delVlanForm_vlanResourceId').attr('value',${networkAdapter.VLan.resourceId});
+											postForm('delVlanForm','delVlan${num}Btn',null,'<fmt:message key='proceed.disconnect'><fmt:param>${networkAdapter.VLanName}</fmt:param></fmt:message>', true);
+										});
+									</script>
+								</c:if>
+							</c:otherwise>
+					</c:choose>
+				</td>
+			</tr>
+			<c:set var="num" value="${num+1}"/>
+			</c:forEach>
+			</table>
+
+
+	<c:url value='/cloudServers/disconnectVirtualSwitch' var="delVlanUrl"/>
+	<form:form commandName="ethVlan" method="post" action="${delVlanUrl}" id="delVlanForm">
+		<form:hidden path="vlanNetAdpId" id="delVlanForm_vlanNetAdpId" />
+		<form:hidden  id="delVlanForm_vlanResourceId" path="vlanResourceId"/>
+		<form:hidden path="serverId" id="delVlanForm_vlanEthId_ServerId"/>
+	</form:form>
+
+
+	<div id="addVlanDlg"  title="<fmt:message key='Connect.Virtual.Switch'/>">
+	<c:url value='/cloudServers/connectVirtualSwitch' var="addVlanUrl"/>
+	<form:form commandName="ethVlan" method="post" action="${addVlanUrl}" id="addVlanForm">
+		<fmt:message key="Virtual.Switch.to.connect"/><br>
+		<form:select path="VlanResourceId" items="${CloudServer.availableVirtualSwitches}" itemValue="resourceId" itemLabel="name"/>
+		<form:hidden path="vlanNetAdpId" id="vlanNetAdpId" />
+		<form:hidden path="serverId" id="vlanEthId_ServerId"/>
+		<div align='right'><button type='button' id='addVlanOkBtn'><fmt:message key="OK"/></button><button type='button' id='addVlanKoBtn'><fmt:message key='Cancel'/></button></div>
+	</form:form>
+	</div>
+	<script type="text/javascript">
+		$('#addVlanDlg').dialog({ autoOpen:false, modal:true, resizable:false });
+		$('#addVlanOkBtn').button({
+		        icons: {
+		             primary: "ui-icon-circle-check"
+		        }
+		});
+		$('#addVlanKoBtn').button({
+		        icons: {
+		             primary: "ui-icon-circle-close"
+		        }
+		});
+		$('#addVlanOkBtn').click(function(){
+			postForm('addVlanForm','addVlanOkBtn',null,null, true);
+		});
+
+		$('#addVlanKoBtn').click(function(){$('#addVlanDlg').dialog('close')});
+		<c:if test="${showAddVlanDlg==true}">
+			$('#addVlanDlg').dialog('open');
+		</c:if>
+	</script>
+
+	<div id="addIpDlg"  title="<fmt:message key='Connect.Public.IPs'/>">
+		<form method="post" action="<c:url value='/cloudServers/connectIps'/>" id="addIpsForm">
+				<c:if test="${addIpDlg_message!=null}">
+					<div id="addIpDlg_message" class="error">${addIpDlg_message}</div>
+				</c:if>
+
+				<div><fmt:message key='select.ips.add'/></div>
+				<table cellpadding="0" cellspacing="0" width="100%">
+					<tr>
+						<th></th>
+						<th><fmt:message key='Public.IP'/></th>
+						<th><fmt:message key='Subnet.Mask'/></th>
+						<th><fmt:message key='Gateway'/></th>
+					</tr>
+					<c:forEach items="${CloudServer.availableIps}" var="ip">
+						<tr>
+							<td>
+								<!--<input type="checkbox" name="ipResourceId_${ip.resourceId}" value="${ip.resourceId}">
+							-->
+								<input type="checkbox" name="ipResourceId" value="${ip.resourceId}">
+							</td>
+							<td>${ip.value}</td>
+							<td>${ip.subNetMask}</td>
+							<td>${ip.gateway}</td>
+						</tr>
+					</c:forEach>
+				</table>
+				<div align='right'><button type='button' id='addIpOkBtn'><fmt:message key='OK'/></button><button type='button' id='addIpKoBtn'><fmt:message key='Cancel'/></button></div>
+
+			<input type="hidden" id="ipAddNetAdpId" name="ipNetAdpId" value=""/>
+			<input type="hidden" name="serverId" value="${CloudServer.appServerDetail.serverId}"/>
+		</form>
+	</div>
+
+	<script type="text/javascript">
+		$('#addIpDlg').dialog({width:500, autoOpen:false, modal:true, resizable:false });
+		$('#addIpOkBtn').button({
+		        icons: {
+		             primary: "ui-icon-circle-check"
+		        }
+		});
+		$('#addIpKoBtn').button({
+		        icons: {
+		             primary: "ui-icon-circle-close"
+		        }
+		});
+		$('#addIpOkBtn').click(function(){
+			postForm('addIpsForm','addIpOkBtn',null,null, true);
+		});
+
+		$('#addIpKoBtn').click(function(){$('#addIpDlg').dialog('close');});
+
+		<c:if test="${showAddIpDlg==true}">
+			$('#addIpDlg').dialog('open');
+		</c:if>
+
+	</script>
+
+
+
+	<div id="delIpDlg"  title="<fmt:message key='Disconnect.Public.IPs'/>">
+
+		<form method="post" action="<c:url value='/cloudServers/disconnectIps'/>" id="delIpsForm">
+				<c:if test="${delIpDlg_message!=null}">
+					<div id="delIpDlg_message" class="error">${delIpDlg_message}</div>
+				</c:if>
+
+				<div><fmt:message key='select.ips.drop'/></div>
+				<table cellpadding="0" cellspacing="0" width="100%">
+					<tr>
+						<th></th>
+						<th><fmt:message key='Public.IP'/></th>
+						<th><fmt:message key='Subnet.Mask'/></th>
+						<th><fmt:message key='Gateway'/></th>
+					</tr>
+					<c:forEach items="${CloudServer.appServerDetail.networkAdapters[0].IPAddresses}" var="ip">
+						<tr>
+							<td>
+								<!--<input type="checkbox" name="ipResourceId_${ip.resourceId}" value="${ip.resourceId}">
+							-->
+								<input type="checkbox" name="ipResourceId" value="${ip.resourceId}">
+							</td>
+							<td>${ip.value}</td>
+							<td>${ip.subNetMask}</td>
+							<td>${ip.gateway}</td>
+						</tr>
+					</c:forEach>
+				</table>
+				<div align='right'><button type='button' id='delIpOkBtn'><fmt:message key='OK'/></button><button type='button' id='delIpKoBtn'><fmt:message key='Cancel'/></button></div>
+			<input type="hidden" id="ipDelNetAdpId" name="ipNetAdpId" value=""/>
+			<input type="hidden" name="serverId" value="${CloudServer.appServerDetail.serverId}"/>
+		</form>
+	</div>
+
+
+
+	<script type="text/javascript">
+		$('#delIpDlg').dialog({width:500, autoOpen:false, modal:true, resizable:false });
+		$('#delIpOkBtn').button({
+		        icons: {
+		             primary: "ui-icon-circle-check"
+		        }
+		});
+		$('#delIpKoBtn').button({
+		        icons: {
+		             primary: "ui-icon-circle-close"
+		        }
+		});
+		$('#delIpOkBtn').click(function(){
+			postForm('delIpsForm','delIpOkBtn',null,null, true);
+		});
+
+		$('#delIpKoBtn').click(function(){$('#delIpDlg').dialog('close');});
+		<c:if test="${showDelIpDlg==true}">
+
+			$('#delIpDlg').dialog('open');
+		</c:if>
+
+		<c:if test="${CloudServer.appServerDetail.archived}">
+
+				$('#addIpBtn').button('disable');
+				$('#delIpBtn').button('disable');
+
+			<c:forEach begin="1" step="1" end="3" var="tmp">
+				$('#addVlan${tmp}Btn').button('disable');
+				$('#delVlan${tmp}Btn').button('disable');
+			</c:forEach>
+		</c:if>
+	</script>

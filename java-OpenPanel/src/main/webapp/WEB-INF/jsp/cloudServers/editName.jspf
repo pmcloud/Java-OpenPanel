@@ -1,0 +1,72 @@
+<%
+/**
+ *
+ * Copyright (c) 2012 <copyright Aruba spa>
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+ * and associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+ * IN THE SOFTWARE.
+ *
+ */
+%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="s" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
+
+<button type="button" id='changeNameBtn'><fmt:message key='Edit'/></button>
+<span id='editServerName'>
+	<form:form commandName="changeName" cssStyle=" display:inline" id="changeNameForm">
+		<form:input path="name" id="serverNameId"/>
+		<button type="button" id='changeNameOkBtn'><fmt:message key='Apply'/></button>
+		<button type="button" id='changeNameKOBtn'><fmt:message key='Abort'/></button>
+	</form:form>
+</span>
+
+<script type="text/javascript">
+	$('#editServerName').hide();
+
+	$('#changeNameBtn').button({text:false,icons:{primary:'ui-icon-pencil'}});
+	$('#changeNameOkBtn').button({text:false,icons:{primary:'ui-icon-check'}});
+	$('#changeNameKOBtn').button({text:false,icons:{primary:'ui-icon-closethick'}});
+	$('#changeNameBtn').click(function(){
+		$('#editServerName').show();
+		$(':button').button('disable');
+		$('#changeNameOkBtn').button('enable');
+		$('#changeNameKOBtn').button('enable');
+	});
+
+	$('#changeNameKOBtn').click(function(){
+		$('#editServerName').hide();
+		$('#changeNameBtn').button('enable');
+		<c:if test="${CloudServer.appServerDetail.stopped}">
+			$(':button').button('enable');
+		</c:if>
+	});
+	$('#changeNameOkBtn').click(function(){
+		postForm('changeNameForm',
+				'changeNameOkBtn',
+				'<c:url value="/cloudServers/renameServer/"/>${CloudServer.appServerDetail.serverId}',
+				'<fmt:message key="modifyName.confirm"/>',
+				true);
+	});
+
+	<c:if test='${showServerNameEdit==true}'>
+		$(document).ready(function(){
+			$('#editServerName').show();
+			$(':button').button('disable');
+			$('#changeNameOkBtn').button('enable');
+			$('#changeNameKOBtn').button('enable');
+		});
+	</c:if>
+</script>

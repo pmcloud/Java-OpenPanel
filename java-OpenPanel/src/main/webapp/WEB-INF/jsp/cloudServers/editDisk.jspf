@@ -1,0 +1,136 @@
+<%
+/**
+ *
+ * Copyright (c) 2012 <copyright Aruba spa>
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+ * and associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+ * IN THE SOFTWARE.
+ *
+ */
+%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="s" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
+
+<td>
+		<c:choose>
+			<c:when test="${CloudServer.appServerDetail.virtualDisks[diskNum].size>0}">
+				<c:set var="diskSize" value="${CloudServer.appServerDetail.virtualDisks[diskNum].size}" scope="page"/>
+				<b>${diskSize}GB</b>
+			</c:when>
+			<c:otherwise>
+				<c:set var="diskSize" value="0" scope="page"/>
+				<b>----</b>
+			</c:otherwise>
+		</c:choose>
+
+</td>
+
+<td nowrap="nowrap">
+		<c:choose>
+			<c:when test="${diskSize>0}">
+				<button type="button" id='changeHd${diskNum}Btn'><fmt:message key='Edit.Disk.Size'/></button>
+				<c:if test="${diskNum>0}">
+					<button type="button" id='removeHd${diskNum}Btn'><fmt:message key='Remove.Virtual.Disk'/></button>
+				</c:if>
+			</c:when>
+			<c:otherwise>
+				<c:if test="${diskNum>0}">
+					<button type="button" id='addHd${diskNum}Btn'><fmt:message key="Add.Virtual.Disk" /></button>
+				</c:if>
+			</c:otherwise>
+		</c:choose>
+
+</td>
+
+<td nowrap="nowrap">
+	<form:form commandName="diskSize" action="" cssStyle=" display:inline" id="formDiskSize_${diskNum}" method="post">
+		<span id="diskSizeDiv_${diskNum}">
+			<input type="hidden" name="diskNum" value="${diskNum}"/>
+			<form:input path="size" maxlength="3" size="4" id="diskSize_${diskNum}"/>
+			<button type="button" id="diskOk_${diskNum}"><fmt:message key="Apply" /></button>
+			<button type="button" id="diskKo_${diskNum}"><fmt:message key="Abort" /></button>
+		</span>
+	</form:form>
+</td>
+
+
+<script type="text/javascript">
+
+		$('#diskSizeDiv_${diskNum}').hide();
+
+		$('#changeHd${diskNum}Btn').button({text:false,icons:{primary:'ui-icon-pencil'}});
+		<c:if test="${diskNum>0}">
+			$('#addHd${diskNum}Btn').button({text:false,icons:{primary:'ui-icon-circle-plus'}});
+			$('#removeHd${diskNum}Btn').button({text:false,icons:{primary:'ui-icon-circle-minus'}});
+		</c:if>
+		$('#diskOk_${diskNum}').button({text:false,icons:{primary:'ui-icon-check'}});
+		$('#diskKo_${diskNum}').button({text:false,icons:{primary:'ui-icon-closethick'}});
+
+		<c:choose>
+			<c:when test="${diskSize>0}">
+				$('#changeHd${diskNum}Btn').click(function(){
+					$('#diskSizeDiv_${diskNum}').show();
+					$(':button').button('disable');
+					$('#diskOk_${diskNum}').button('enable');
+					$('#diskKo_${diskNum}').button('enable');
+				});
+			</c:when>
+			<c:otherwise>
+				$('#addHd${diskNum}Btn').click(function(){
+				$('#diskSizeDiv_${diskNum}').show();
+				$(':button').button('disable');
+				$('#diskOk_${diskNum}').button('enable');
+				$('#diskKo_${diskNum}').button('enable');
+			});
+			</c:otherwise>
+		</c:choose>
+
+
+		$('#diskKo_${diskNum}').click(function(){
+			$('#diskSizeDiv_${diskNum}').hide();
+			$(':button').button('enable');
+		});
+
+		$('#removeHd${diskNum}Btn').click(function(){
+			postForm('formDiskSize_${diskNum}',
+					'removeHd${diskNum}Btn',
+					'<c:url value="/cloudServers/removeDisk/${CloudServer.appServerDetail.serverId}"/>',
+					"<fmt:message key='hdx.delete.confirm'><fmt:param value="${diskNum}"/></fmt:message>",
+					true);
+		});
+
+		$('#diskOk_${diskNum}').click(function(){
+			postForm('formDiskSize_${diskNum}',
+					'removeHd${diskNum}Btn',
+					'<c:url value="/cloudServers/updateDisk/${CloudServer.appServerDetail.serverId}"/>',
+					'<fmt:message key="hdx.update.confirm"><fmt:param value="${diskNum}"/></fmt:message>',
+					true);
+		});
+
+		<c:if test="${!CloudServer.appServerDetail.stopped}">
+			$('#addHd${diskNum}Btn').button('disable');
+			$('#removeHd${diskNum}Btn').button('disable');
+			$('#changeHd${diskNum}Btn').button('disable');
+		</c:if>
+		<c:if test="${showServerDiskEdit[diskNum]==true}">
+			$(document).ready(function(){
+				$('#diskSizeDiv_${diskNum}').show();
+				$(':button').button('disable');
+				$('#diskOk_${diskNum}').button('enable');
+				$('#diskKo_${diskNum}').button('enable');
+			});
+		</c:if>
+</script>
