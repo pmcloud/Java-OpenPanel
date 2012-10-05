@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 /**
  *
@@ -27,8 +27,8 @@ package whitelabel.cloud.wsclient;
 public interface WSEndpoint {
 
 	public final String DEF_WS_URL 	= "https://api.dc1.computing.cloud.it";
-	
-	public final String DEF_ENDUSER_API_VERSION	= "v1.4";
-		
+
+	public final String DEF_ENDUSER_API_VERSION	= "v2.0";
+
 	public final String SESSION_DATA = "SESSION_DATA";
 }
