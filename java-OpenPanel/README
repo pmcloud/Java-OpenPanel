@@ -27,7 +27,7 @@ Apache Maven 3.0.3
 How to compile this project
 ---------------------------------------------------------------------------
 Java-OpenPanel is built using Maven 3.x; every dependencies and compilation requirements are handled thanks to this tool.
-Here a quick guide about project compile's steps: 
+Here a quick guide about project compile's steps:
 
 1) download sources from public (GitHub o SourceForge) in a folder
 2) move into the folder that contains the maven project descriptor  (pom.xml)
@@ -38,11 +38,11 @@ Here a quick guide about project compile's steps:
 
 How to upgrade WS API version
 ----------------------------------------------------------------------------
-This project is based on version 1.4 of WsEndUser API;
-to update to the last version follow these steps: 
+This project is based on version 2.0 of WsEndUser API;
+to update to the last version follow these steps:
 
 1) Open the schema definition file (.xsd) with your favourite editor: <project-directory>/src/main/resources/xsd/svc/https/root-schema-wsenduser.xsd
-2) Edit this file changing every reference to the "1.4" version with that  you want to use 
+2) Edit this file changing every reference to the "2.0" version with that  you want to use
 
 
 ** WARNING **: changing WS-API's version of WsEndUser could be produce some compilation errors due to some changes in the method's signature.
@@ -51,5 +51,5 @@ to update to the last version follow these steps:
 
 How to get user credentials
 ------------------------------------------------------------------------------
-Visit http://www.cloud.it and register into the cloud service! 
+Visit http://www.cloud.it and register into the cloud service!
 
